@@ -27,6 +27,8 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 # The two directories the whole pipeline reads from / writes to.
 INPUT_DIR = os.path.join(ROOT_DIR, "data", "input")
 OUTPUT_DIR = os.path.join(ROOT_DIR, "data", "output")
+# The post-tournament evaluation (report.md + its tables and figures).
+FINAL_DIR = os.path.join(OUTPUT_DIR, "final_evaluation")
 
 # Individual input files.
 RESULTS_CSV = os.path.join(INPUT_DIR, "results.csv")
@@ -99,6 +101,15 @@ RNG_SEED = 42                 # master seed -> fully reproducible runs
 BACKTEST_TRAIN_END = "2018-01-01"   # train strictly before this date
 BACKTEST_TEST_START = "2018-01-01"  # test on this window (real WC 2018 + after)
 BACKTEST_TEST_END = "2022-12-31"
+
+# ---------------------------------------------------------------------------
+# Final evaluation (runs once all 104 results are entered)
+# ---------------------------------------------------------------------------
+# Replay the live forecast: re-fit the model before every match day on the
+# results known at that point, and re-run the full Monte Carlo after each round.
+# This is what makes "live model vs pre-tournament model" measurable; it adds
+# ~3 minutes to a run. Set False to skip it (the rest of the report still runs).
+RUN_LIVE_REPLAY = True
 
 # ---------------------------------------------------------------------------
 # Output formatting
