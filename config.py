@@ -33,9 +33,14 @@ RESULTS_CSV = os.path.join(INPUT_DIR, "results.csv")
 SHOOTOUTS_CSV = os.path.join(INPUT_DIR, "shootouts.csv")
 FORMER_NAMES_CSV = os.path.join(INPUT_DIR, "former_names.csv")
 
-# The daily-updated file of *actual* 2026 results. Edit this each day; the
-# pipeline re-reads it on every run. See data/input/actual_results_2026.csv.
+# The *actual* 2026 results — all 104 matches, verified against Wikipedia, ESPN
+# and the martj42 dataset. Updated daily during the tournament; the pipeline
+# re-reads it on every run.
 ACTUAL_RESULTS_CSV = os.path.join(INPUT_DIR, "actual_results_2026.csv")
+
+# Per-team squad market values frozen at SQUAD_VALUE_AS_OF (written on first
+# use, then reused so every rerun sees exactly the same values).
+SQUAD_VALUES_CSV = os.path.join(INPUT_DIR, "squad_values.csv")
 
 # ---------------------------------------------------------------------------
 # Data acquisition
@@ -45,8 +50,17 @@ ACTUAL_RESULTS_CSV = os.path.join(INPUT_DIR, "actual_results_2026.csv")
 # then raises instead of hitting the network).
 ALLOW_DOWNLOAD = True
 RESULTS_BASE_URL = "https://raw.githubusercontent.com/martj42/international_results/master"
-# Transfermarkt squad-value snapshot (used by the optional GB hybrid).
-TRANSFERMARKT_URL = "https://pub-e682421888d945d684bcae8890b0ec20.r2.dev/data/players.csv.gz"
+# Transfermarkt data (dcaribou/transfermarkt-datasets) for the optional GB
+# hybrid: players.csv gives each player's citizenship, player_valuations.csv
+# the dated history of market values.
+TRANSFERMARKT_PLAYERS_URL = "https://pub-e682421888d945d684bcae8890b0ec20.r2.dev/data/players.csv.gz"
+TRANSFERMARKT_VALUATIONS_URL = (
+    "https://pub-e682421888d945d684bcae8890b0ec20.r2.dev/data/player_valuations.csv.gz")
+# Squad values are taken as of the eve of the tournament: each player's latest
+# valuation on or before this date. The live snapshot is rebuilt weekly, so
+# reading "current" values made the pre-tournament forecast drift between runs
+# (and would eventually let post-tournament price moves leak in).
+SQUAD_VALUE_AS_OF = "2026-06-10"
 
 # ---------------------------------------------------------------------------
 # Goals model

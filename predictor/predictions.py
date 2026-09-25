@@ -3,12 +3,13 @@ predictions.py — human-readable per-match and bracket forecasts.
 
 Two products:
   * ``group_stage_predictions`` — a predicted scoreline for all 72 group games
-    (entered results shown verbatim and flagged ✓; the rest use the most-likely
+    (entered results shown verbatim and flagged "actual"; the rest use the most-likely
     Dixon-Coles-corrected scoreline).
   * ``project_bracket`` — the single *most-likely path* through the knockout
-    bracket, built from the Monte-Carlo modal group finishers and third-place
-    qualifiers. The probability tables from the Monte Carlo are the rigorous
-    view; this is the "one bracket to print on a wall" companion.
+    bracket (all 32 ties, including the third-place play-off), built from the
+    Monte-Carlo modal group finishers and third-place qualifiers. The
+    probability tables from the Monte Carlo are the rigorous view; this is the
+    "one bracket to print on a wall" companion.
 """
 
 from __future__ import annotations
@@ -16,7 +17,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from constants import GROUP_FIXTURES, GROUPS, HOSTS, KO_MATCH_ORDER, LATER, ROUND_OF, THIRD_PLACE_TABLE
+from constants import (GROUP_FIXTURES, GROUPS, HOSTS, KO_MATCH_ORDER, LATER, ROUND_OF,
+                       THIRD_PLACE_FEEDERS, THIRD_PLACE_MATCH, THIRD_PLACE_TABLE)
 from predictor.goals_model import predict_scoreline
 from predictor.tournament import r32_pairs
 
@@ -31,7 +33,7 @@ def group_stage_predictions(model: dict, ratings: dict, group_actual: dict) -> p
             if key in group_actual:
                 ga, gb = group_actual[key]["by_team"][a], group_actual[key]["by_team"][b]
                 res = f"{a} {ga}-{gb} {b}"
-                tag = "✓ actual"
+                tag = "actual"
             else:
                 (ga, gb), (pH, pD, pA), _, _ = predict_scoreline(
                     model, ratings, a, b, home_a=int(a in HOSTS), home_b=int(b in HOSTS))
@@ -41,8 +43,12 @@ def group_stage_predictions(model: dict, ratings: dict, group_actual: dict) -> p
     return pd.DataFrame(rows)
 
 
-def _projected_finishers(pos: dict, q3: dict):
-    """Modal group winners / runners-up / thirds and the eight qualifying thirds."""
+def projected_finishers(pos: dict, q3: dict):
+    """Modal group winners / runners-up / thirds and the eight qualifying thirds.
+
+    Returns ``(proj_W, proj_R, proj_3, T_proj)``: group -> team for the first
+    three, and R32 slot -> third-placed team for the eight projected qualifiers.
+    """
     proj_W, proj_R, proj_3 = {}, {}, {}
     for g in GROUPS:
         by1 = sorted(GROUPS[g], key=lambda t: pos[g][t][0], reverse=True)
@@ -73,7 +79,7 @@ def project_bracket(model: dict, ratings: dict, simulator, pos: dict, q3: dict, 
                 sc = f"{ga}-{gb} (pens {ps[w]}-{ps[b if w == a else a]})"
             else:
                 sc = f"{ga}-{gb} (pens {w} wins)"
-            return w, sc, "✓"
+            return w, sc, "actual"
         (i, j), (pH, pD, pA), _, M = predict_scoreline(model, ratings, a, b)
         padv_a = pH + pD * simulator.pen_p(a, b)
         w = a if padv_a >= 0.5 else b
@@ -87,14 +93,19 @@ def project_bracket(model: dict, ratings: dict, simulator, pos: dict, q3: dict, 
             sc = f"{ii}-{jj}"
         return w, sc, ""
 
-    proj_W, proj_R, proj_3, T_proj = _projected_finishers(pos, q3)
+    proj_W, proj_R, proj_3, T_proj = projected_finishers(pos, q3)
     pairs = r32_pairs(proj_W, proj_R, T_proj)
-    win, brk = {}, []
+    win, lose, brk = {}, {}, []
     for no in KO_MATCH_ORDER:
-        a, b = pairs[no] if no in pairs else (win[LATER[no][0]], win[LATER[no][1]])
+        if no in pairs:
+            a, b = pairs[no]
+        elif no == THIRD_PLACE_MATCH:
+            a, b = lose[THIRD_PLACE_FEEDERS[0]], lose[THIRD_PLACE_FEEDERS[1]]
+        else:
+            a, b = win[LATER[no][0]], win[LATER[no][1]]
         w, sc, tag = project_match(a, b)
-        win[no] = w
+        win[no], lose[no] = w, (b if w == a else a)
         brk.append({"match": no, "round": ROUND_OF[no], "fixture": f"{a} v {b}",
-                    "score": sc, "winner": w, "flag": tag})
+                    "team_a": a, "team_b": b, "score": sc, "winner": w, "flag": tag})
     df = pd.DataFrame(brk)
     return df, win[104], [win[101], win[102]]

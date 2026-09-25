@@ -7,7 +7,7 @@ This is the single source of truth for:
   * the six fixtures inside each group                           -> GROUP_FIXTURES
   * the Elo K-factor schedule by competition tier                -> k_factor()
   * FIFA's official 495-row "best eight third-placed teams" table -> THIRD_PLACE_TABLE
-  * the knockout bracket wiring (R32 -> Final)                   -> LATER / ROUND_OF
+  * the knockout bracket wiring (R32 -> Final, + third place)    -> LATER / ROUND_OF
   * Transfermarkt -> dataset country-name fixes                  -> TM_MAP
 
 Team spellings match the martj42/international_results dataset exactly so the
@@ -43,7 +43,7 @@ ALL_TEAMS: list[str] = [t for g in GROUPS.values() for t in g]
 # Tournament constants.
 N_GROUP_TEAMS = 4
 DATE_FORMAT = "%Y-%m-%d"
-TOURNAMENT_START = "2026-06-11"   # used to stamp entered results onto the timeline
+TOURNAMENT_START = "2026-06-11"   # history cut-off; entered results are stamped from here
 FINAL_DATE = "2026-07-19"
 
 # The six round-robin fixtures within a 4-team group, as index pairs into the
@@ -86,17 +86,24 @@ LATER: dict[int, tuple[int, int]] = {
     101: (97, 98), 102: (99, 100), 104: (101, 102),
 }
 
+# The third-place play-off (match 103) is contested by the two semi-final
+# *losers*, so it is wired separately from LATER (which pairs winners). It
+# decides nothing about the title, so the Monte Carlo does not simulate it; the
+# projected bracket and the evaluation include it so all 104 matches are covered.
+THIRD_PLACE_MATCH = 103
+THIRD_PLACE_FEEDERS: tuple[int, int] = (101, 102)
+
 # Match number -> round label.
 ROUND_OF: dict[int, str] = {
     **{m: "R32" for m in range(73, 89)},
     **{m: "R16" for m in range(89, 97)},
     **{m: "QF" for m in range(97, 101)},
-    101: "SF", 102: "SF", 104: "Final",
+    101: "SF", 102: "SF", 103: "3rd", 104: "Final",
 }
 
 # Order in which knockout matches are resolved (feeders before consumers).
 KO_MATCH_ORDER: list[int] = (
-    list(range(73, 89)) + [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 104]
+    list(range(73, 89)) + [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104]
 )
 
 
