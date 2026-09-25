@@ -1,0 +1,12 @@
+stage,date,fixture,result,what_happened,model_probability
+group,2026-06-13,Qatar v Switzerland,1-1,draw,0.0937
+group,2026-06-15,Spain v Cape Verde,0-0,draw,0.0985
+group,2026-06-24,South Africa v South Korea,1-0,South Africa win,0.1683
+group,2026-06-23,England v Ghana,0-0,draw,0.1807
+group,2026-06-14,Ivory Coast v Ecuador,1-0,Ivory Coast win,0.1828
+group,2026-06-20,Ecuador v Curaçao,0-0,draw,0.2034
+ko,2026-07-07,Switzerland v Colombia,0-0 aet (pens 4-3),Switzerland went through,0.3913
+ko,2026-06-30,Mexico v Ecuador,2-0,Mexico went through,0.4045
+ko,2026-07-03,Australia v Egypt,1-1 aet (pens 2-4),Egypt went through,0.4046
+ko,2026-06-29,Germany v Paraguay,1-1 aet (pens 3-4),Paraguay went through,0.4252
+ko,2026-06-29,Brazil v Japan,2-1,Brazil went through,0.49

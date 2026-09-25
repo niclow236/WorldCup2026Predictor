@@ -1,0 +1,33 @@
+match,round,projected,projected_winner,actual,actual_score,actual_winner,fixture_hit,winner_hit
+73,R32,South Korea v Switzerland,Switzerland,South Africa v Canada,0-1,Canada,False,False
+74,R32,Germany v Scotland,Germany,Germany v Paraguay,1-1 aet (pens 3-4),Paraguay,False,False
+75,R32,Netherlands v Morocco,Morocco,Netherlands v Morocco,1-1 aet (pens 2-3),Morocco,True,True
+76,R32,Brazil v Japan,Japan,Brazil v Japan,2-1,Brazil,True,False
+77,R32,France v Sweden,France,France v Sweden,3-0,France,True,True
+78,R32,Ecuador v Norway,Norway,Ivory Coast v Norway,1-2,Norway,False,True
+79,R32,Mexico v Ivory Coast,Mexico,Mexico v Ecuador,2-0,Mexico,False,True
+80,R32,England v Senegal,England,England v DR Congo,2-1,England,False,True
+81,R32,United States v Bosnia and Herzegovina,United States,United States v Bosnia and Herzegovina,2-0,United States,True,True
+82,R32,Belgium v Czech Republic,Belgium,Belgium v Senegal,3-2 aet,Belgium,False,True
+83,R32,Colombia v Croatia,Colombia,Portugal v Croatia,2-1,Portugal,False,False
+84,R32,Spain v Austria,Spain,Spain v Austria,3-0,Spain,True,True
+85,R32,Canada v Algeria,Canada,Switzerland v Algeria,2-0,Switzerland,False,False
+86,R32,Argentina v Uruguay,Argentina,Argentina v Cape Verde,3-2 aet,Argentina,False,True
+87,R32,Portugal v Panama,Portugal,Colombia v Ghana,1-0,Colombia,False,False
+88,R32,Paraguay v Iran,Paraguay,Australia v Egypt,1-1 aet (pens 2-4),Egypt,False,False
+89,R16,Germany v France,France,Paraguay v France,0-1,France,False,True
+90,R16,Switzerland v Morocco,Morocco,Canada v Morocco,0-3,Morocco,False,True
+91,R16,Japan v Norway,Norway,Brazil v Norway,1-2,Norway,False,True
+92,R16,Mexico v England,England,Mexico v England,2-3,England,True,True
+93,R16,Colombia v Spain,Spain,Portugal v Spain,0-1,Spain,False,True
+94,R16,United States v Belgium,Belgium,United States v Belgium,1-4,Belgium,True,True
+95,R16,Argentina v Paraguay,Argentina,Argentina v Egypt,3-2,Argentina,False,True
+96,R16,Canada v Portugal,Portugal,Switzerland v Colombia,0-0 aet (pens 4-3),Switzerland,False,False
+97,QF,France v Morocco,France,France v Morocco,2-0,France,True,True
+98,QF,Spain v Belgium,Spain,Spain v Belgium,2-1,Spain,True,True
+99,QF,Norway v England,England,Norway v England,1-2 aet,England,True,True
+100,QF,Argentina v Portugal,Argentina,Argentina v Switzerland,3-1 aet,Argentina,False,True
+101,SF,France v Spain,Spain,France v Spain,0-2,Spain,True,True
+102,SF,England v Argentina,Argentina,England v Argentina,1-2,Argentina,True,True
+103,3rd,France v England,England,France v England,4-6,England,True,True
+104,Final,Spain v Argentina,Spain,Spain v Argentina,1-0 aet,Spain,True,True

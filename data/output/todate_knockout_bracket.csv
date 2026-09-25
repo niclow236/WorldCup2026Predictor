@@ -1,0 +1,33 @@
+match,round,fixture,team_a,team_b,score,winner,flag
+73,R32,South Africa v Canada,South Africa,Canada,0-1,Canada,actual
+74,R32,Germany v Paraguay,Germany,Paraguay,1-1 (pens 4-3),Paraguay,actual
+75,R32,Netherlands v Morocco,Netherlands,Morocco,1-1 (pens 3-2),Morocco,actual
+76,R32,Brazil v Japan,Brazil,Japan,2-1,Brazil,actual
+77,R32,France v Sweden,France,Sweden,3-0,France,actual
+78,R32,Ivory Coast v Norway,Ivory Coast,Norway,1-2,Norway,actual
+79,R32,Mexico v Ecuador,Mexico,Ecuador,2-0,Mexico,actual
+80,R32,England v DR Congo,England,DR Congo,2-1,England,actual
+81,R32,United States v Bosnia and Herzegovina,United States,Bosnia and Herzegovina,2-0,United States,actual
+82,R32,Belgium v Senegal,Belgium,Senegal,3-2,Belgium,actual
+83,R32,Portugal v Croatia,Portugal,Croatia,2-1,Portugal,actual
+84,R32,Spain v Austria,Spain,Austria,3-0,Spain,actual
+85,R32,Switzerland v Algeria,Switzerland,Algeria,2-0,Switzerland,actual
+86,R32,Argentina v Cape Verde,Argentina,Cape Verde,3-2,Argentina,actual
+87,R32,Colombia v Ghana,Colombia,Ghana,1-0,Colombia,actual
+88,R32,Australia v Egypt,Australia,Egypt,1-1 (pens 4-2),Egypt,actual
+89,R16,Paraguay v France,Paraguay,France,0-1,France,actual
+90,R16,Canada v Morocco,Canada,Morocco,0-3,Morocco,actual
+91,R16,Brazil v Norway,Brazil,Norway,1-2,Norway,actual
+92,R16,Mexico v England,Mexico,England,2-3,England,actual
+93,R16,Portugal v Spain,Portugal,Spain,0-1,Spain,actual
+94,R16,United States v Belgium,United States,Belgium,1-4,Belgium,actual
+95,R16,Argentina v Egypt,Argentina,Egypt,3-2,Argentina,actual
+96,R16,Switzerland v Colombia,Switzerland,Colombia,0-0 (pens 4-3),Switzerland,actual
+97,QF,France v Morocco,France,Morocco,2-0,France,actual
+98,QF,Spain v Belgium,Spain,Belgium,2-1,Spain,actual
+99,QF,Norway v England,Norway,England,1-2,England,actual
+100,QF,Argentina v Switzerland,Argentina,Switzerland,3-1,Argentina,actual
+101,SF,France v Spain,France,Spain,0-2,Spain,actual
+102,SF,England v Argentina,England,Argentina,1-2,Argentina,actual
+103,3rd,France v England,France,England,4-6,England,actual
+104,Final,Spain v Argentina,Spain,Argentina,1-0,Spain,actual

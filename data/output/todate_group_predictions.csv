@@ -1,0 +1,73 @@
+grp,match,result,note
+A,Mexico v South Africa,Mexico 2-0 South Africa,actual
+A,South Korea v Czech Republic,South Korea 2-1 Czech Republic,actual
+A,Mexico v South Korea,Mexico 1-0 South Korea,actual
+A,South Africa v Czech Republic,South Africa 1-1 Czech Republic,actual
+A,Mexico v Czech Republic,Mexico 3-0 Czech Republic,actual
+A,South Africa v South Korea,South Africa 1-0 South Korea,actual
+B,Canada v Bosnia and Herzegovina,Canada 1-1 Bosnia and Herzegovina,actual
+B,Qatar v Switzerland,Qatar 1-1 Switzerland,actual
+B,Canada v Qatar,Canada 6-0 Qatar,actual
+B,Bosnia and Herzegovina v Switzerland,Bosnia and Herzegovina 1-4 Switzerland,actual
+B,Canada v Switzerland,Canada 1-2 Switzerland,actual
+B,Bosnia and Herzegovina v Qatar,Bosnia and Herzegovina 3-1 Qatar,actual
+C,Brazil v Morocco,Brazil 1-1 Morocco,actual
+C,Haiti v Scotland,Haiti 0-1 Scotland,actual
+C,Brazil v Haiti,Brazil 3-0 Haiti,actual
+C,Morocco v Scotland,Morocco 1-0 Scotland,actual
+C,Brazil v Scotland,Brazil 3-0 Scotland,actual
+C,Morocco v Haiti,Morocco 4-2 Haiti,actual
+D,United States v Paraguay,United States 4-1 Paraguay,actual
+D,Australia v Turkey,Australia 2-0 Turkey,actual
+D,United States v Australia,United States 2-0 Australia,actual
+D,Paraguay v Turkey,Paraguay 1-0 Turkey,actual
+D,United States v Turkey,United States 2-3 Turkey,actual
+D,Paraguay v Australia,Paraguay 0-0 Australia,actual
+E,Germany v Curaçao,Germany 7-1 Curaçao,actual
+E,Ivory Coast v Ecuador,Ivory Coast 1-0 Ecuador,actual
+E,Germany v Ivory Coast,Germany 2-1 Ivory Coast,actual
+E,Curaçao v Ecuador,Curaçao 0-0 Ecuador,actual
+E,Germany v Ecuador,Germany 1-2 Ecuador,actual
+E,Curaçao v Ivory Coast,Curaçao 0-2 Ivory Coast,actual
+F,Netherlands v Japan,Netherlands 2-2 Japan,actual
+F,Sweden v Tunisia,Sweden 5-1 Tunisia,actual
+F,Netherlands v Sweden,Netherlands 5-1 Sweden,actual
+F,Japan v Tunisia,Japan 4-0 Tunisia,actual
+F,Netherlands v Tunisia,Netherlands 3-1 Tunisia,actual
+F,Japan v Sweden,Japan 1-1 Sweden,actual
+G,Belgium v Egypt,Belgium 1-1 Egypt,actual
+G,Iran v New Zealand,Iran 2-2 New Zealand,actual
+G,Belgium v Iran,Belgium 0-0 Iran,actual
+G,Egypt v New Zealand,Egypt 3-1 New Zealand,actual
+G,Belgium v New Zealand,Belgium 5-1 New Zealand,actual
+G,Egypt v Iran,Egypt 1-1 Iran,actual
+H,Spain v Cape Verde,Spain 0-0 Cape Verde,actual
+H,Saudi Arabia v Uruguay,Saudi Arabia 1-1 Uruguay,actual
+H,Spain v Saudi Arabia,Spain 4-0 Saudi Arabia,actual
+H,Cape Verde v Uruguay,Cape Verde 2-2 Uruguay,actual
+H,Spain v Uruguay,Spain 1-0 Uruguay,actual
+H,Cape Verde v Saudi Arabia,Cape Verde 0-0 Saudi Arabia,actual
+I,France v Senegal,France 3-1 Senegal,actual
+I,Iraq v Norway,Iraq 1-4 Norway,actual
+I,France v Iraq,France 3-0 Iraq,actual
+I,Senegal v Norway,Senegal 2-3 Norway,actual
+I,France v Norway,France 4-1 Norway,actual
+I,Senegal v Iraq,Senegal 5-0 Iraq,actual
+J,Argentina v Algeria,Argentina 3-0 Algeria,actual
+J,Austria v Jordan,Austria 3-1 Jordan,actual
+J,Argentina v Austria,Argentina 2-0 Austria,actual
+J,Algeria v Jordan,Algeria 2-1 Jordan,actual
+J,Argentina v Jordan,Argentina 3-1 Jordan,actual
+J,Algeria v Austria,Algeria 3-3 Austria,actual
+K,Portugal v DR Congo,Portugal 1-1 DR Congo,actual
+K,Uzbekistan v Colombia,Uzbekistan 1-3 Colombia,actual
+K,Portugal v Uzbekistan,Portugal 5-0 Uzbekistan,actual
+K,DR Congo v Colombia,DR Congo 0-1 Colombia,actual
+K,Portugal v Colombia,Portugal 0-0 Colombia,actual
+K,DR Congo v Uzbekistan,DR Congo 3-1 Uzbekistan,actual
+L,England v Croatia,England 4-2 Croatia,actual
+L,Ghana v Panama,Ghana 1-0 Panama,actual
+L,England v Ghana,England 0-0 Ghana,actual
+L,Croatia v Panama,Croatia 1-0 Panama,actual
+L,England v Panama,England 2-0 Panama,actual
+L,Croatia v Ghana,Croatia 2-1 Ghana,actual
