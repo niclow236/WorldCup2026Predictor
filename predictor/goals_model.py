@@ -14,7 +14,7 @@ The fitted model is a plain dict (``att``, ``dfn``, ``hc``, ``elo_beta``,
 ``intercept``) so it is trivially serialisable and cheap to pass around. Helper
 functions turn it into expected goals (``xg``), win/draw/loss probabilities
 (``wdl_probs``), and a full Dixon-Coles-corrected scoreline grid
-(``predict_scoreline``).
+(``predict_scoreline``, built on the model-agnostic ``scoreline_grid``).
 """
 
 from __future__ import annotations
@@ -136,17 +136,15 @@ def dc_tau(i: int, j: int, la: float, lb: float, rho: float) -> float:
     return 1.0
 
 
-def predict_scoreline(model: dict, ratings: dict, a: str, b: str,
-                      home_a: int = 0, home_b: int = 0,
-                      rho: float | None = None, maxg: int = 10):
-    """Most-likely scoreline + outcome probabilities for ``a`` vs ``b``.
+def scoreline_grid(la: float, lb: float, rho: float | None = None, maxg: int = 10):
+    """Dixon-Coles-corrected scoreline distribution for Poisson means ``la``, ``lb``.
 
-    Returns ``((goals_a, goals_b), (pH, pD, pA), (la, lb), M)`` where ``M`` is
-    the normalised, Dixon-Coles-corrected joint score-probability matrix.
+    Returns ``((goals_a, goals_b), (pH, pD, pA), M)``: the most-likely
+    scoreline, the outcome probabilities, and the normalised joint
+    score-probability matrix ``M``. Model-agnostic, so any expected-goals source
+    (Poisson+Elo, the GB hybrid, ...) can be turned into match probabilities.
     """
     rho = config.DIXON_COLES_RHO if rho is None else rho
-    la = xg(model, a, b, ratings.get(a, 1500), ratings.get(b, 1500), home_a)
-    lb = xg(model, b, a, ratings.get(b, 1500), ratings.get(a, 1500), home_b)
     pa = poisson.pmf(np.arange(maxg + 1), la)
     pb = poisson.pmf(np.arange(maxg + 1), lb)
     M = np.outer(pa, pb)
@@ -156,4 +154,18 @@ def predict_scoreline(model: dict, ratings: dict, a: str, b: str,
     M /= M.sum()
     pH, pD, pA = np.tril(M, -1).sum(), np.trace(M), np.triu(M, 1).sum()
     i, j = np.unravel_index(np.argmax(M), M.shape)
-    return (int(i), int(j)), (pH, pD, pA), (la, lb), M
+    return (int(i), int(j)), (pH, pD, pA), M
+
+
+def predict_scoreline(model: dict, ratings: dict, a: str, b: str,
+                      home_a: int = 0, home_b: int = 0,
+                      rho: float | None = None, maxg: int = 10):
+    """Most-likely scoreline + outcome probabilities for ``a`` vs ``b``.
+
+    Returns ``((goals_a, goals_b), (pH, pD, pA), (la, lb), M)`` where ``M`` is
+    the normalised, Dixon-Coles-corrected joint score-probability matrix.
+    """
+    la = xg(model, a, b, ratings.get(a, 1500), ratings.get(b, 1500), home_a)
+    lb = xg(model, b, a, ratings.get(b, 1500), ratings.get(a, 1500), home_b)
+    score, probs, M = scoreline_grid(la, lb, rho, maxg)
+    return score, probs, (la, lb), M

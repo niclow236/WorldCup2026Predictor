@@ -63,3 +63,13 @@ def run_elo(matches: pd.DataFrame) -> tuple[dict[str, float], np.ndarray, np.nda
         R[at[i]] = ra - change
 
     return R, pre_h, pre_a
+
+
+def attach_elo(matches: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, float]]:
+    """Run Elo over ``matches``; return a copy carrying ``elo_h_pre`` / ``elo_a_pre``
+    (the columns the goals model trains on) plus the final ratings."""
+    ratings, pre_h, pre_a = run_elo(matches)
+    matches = matches.copy()
+    matches["elo_h_pre"] = pre_h
+    matches["elo_a_pre"] = pre_a
+    return matches, ratings

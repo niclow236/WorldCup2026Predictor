@@ -1,0 +1,13 @@
+group,predicted_order,actual_order,winner_hit,top2_hit,exact_order_hit,positions_correct,p_actual_winner_%
+A,Mexico > South Korea > Czech Republic > South Africa,Mexico > South Africa > South Korea > Czech Republic,True,False,False,1,63.885
+B,Canada > Switzerland > Bosnia and Herzegovina > Qatar,Switzerland > Canada > Bosnia and Herzegovina > Qatar,False,True,False,2,45.345
+C,Brazil > Morocco > Scotland > Haiti,Brazil > Morocco > Scotland > Haiti,True,True,True,4,59.555
+D,United States > Paraguay > Australia > Turkey,United States > Australia > Paraguay > Turkey,True,False,False,2,31.025
+E,Germany > Ecuador > Ivory Coast > Curaçao,Germany > Ivory Coast > Ecuador > Curaçao,True,False,False,2,54.255
+F,Netherlands > Japan > Sweden > Tunisia,Netherlands > Japan > Sweden > Tunisia,True,True,True,4,47.445
+G,Belgium > Iran > Egypt > New Zealand,Belgium > Egypt > Iran > New Zealand,True,False,False,2,61.23
+H,Spain > Uruguay > Cape Verde > Saudi Arabia,Spain > Cape Verde > Uruguay > Saudi Arabia,True,False,False,2,78.23
+I,France > Norway > Senegal > Iraq,France > Norway > Senegal > Iraq,True,True,True,4,63.435
+J,Argentina > Austria > Algeria > Jordan,Argentina > Austria > Algeria > Jordan,True,True,True,4,75.46
+K,Portugal > Colombia > Uzbekistan > DR Congo,Colombia > Portugal > DR Congo > Uzbekistan,False,True,False,0,38.385
+L,England > Croatia > Panama > Ghana,England > Croatia > Ghana > Panama,True,True,False,2,60.535

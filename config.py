@@ -27,15 +27,22 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 # The two directories the whole pipeline reads from / writes to.
 INPUT_DIR = os.path.join(ROOT_DIR, "data", "input")
 OUTPUT_DIR = os.path.join(ROOT_DIR, "data", "output")
+# The post-tournament evaluation (report.md + its tables and figures).
+FINAL_DIR = os.path.join(OUTPUT_DIR, "final_evaluation")
 
 # Individual input files.
 RESULTS_CSV = os.path.join(INPUT_DIR, "results.csv")
 SHOOTOUTS_CSV = os.path.join(INPUT_DIR, "shootouts.csv")
 FORMER_NAMES_CSV = os.path.join(INPUT_DIR, "former_names.csv")
 
-# The daily-updated file of *actual* 2026 results. Edit this each day; the
-# pipeline re-reads it on every run. See data/input/actual_results_2026.csv.
+# The *actual* 2026 results — all 104 matches, verified against Wikipedia, ESPN
+# and the martj42 dataset. Updated daily during the tournament; the pipeline
+# re-reads it on every run.
 ACTUAL_RESULTS_CSV = os.path.join(INPUT_DIR, "actual_results_2026.csv")
+
+# Per-team squad market values frozen at SQUAD_VALUE_AS_OF (written on first
+# use, then reused so every rerun sees exactly the same values).
+SQUAD_VALUES_CSV = os.path.join(INPUT_DIR, "squad_values.csv")
 
 # ---------------------------------------------------------------------------
 # Data acquisition
@@ -45,8 +52,17 @@ ACTUAL_RESULTS_CSV = os.path.join(INPUT_DIR, "actual_results_2026.csv")
 # then raises instead of hitting the network).
 ALLOW_DOWNLOAD = True
 RESULTS_BASE_URL = "https://raw.githubusercontent.com/martj42/international_results/master"
-# Transfermarkt squad-value snapshot (used by the optional GB hybrid).
-TRANSFERMARKT_URL = "https://pub-e682421888d945d684bcae8890b0ec20.r2.dev/data/players.csv.gz"
+# Transfermarkt data (dcaribou/transfermarkt-datasets) for the optional GB
+# hybrid: players.csv gives each player's citizenship, player_valuations.csv
+# the dated history of market values.
+TRANSFERMARKT_PLAYERS_URL = "https://pub-e682421888d945d684bcae8890b0ec20.r2.dev/data/players.csv.gz"
+TRANSFERMARKT_VALUATIONS_URL = (
+    "https://pub-e682421888d945d684bcae8890b0ec20.r2.dev/data/player_valuations.csv.gz")
+# Squad values are taken as of the eve of the tournament: each player's latest
+# valuation on or before this date. The live snapshot is rebuilt weekly, so
+# reading "current" values made the pre-tournament forecast drift between runs
+# (and would eventually let post-tournament price moves leak in).
+SQUAD_VALUE_AS_OF = "2026-06-10"
 
 # ---------------------------------------------------------------------------
 # Goals model
@@ -85,6 +101,15 @@ RNG_SEED = 42                 # master seed -> fully reproducible runs
 BACKTEST_TRAIN_END = "2018-01-01"   # train strictly before this date
 BACKTEST_TEST_START = "2018-01-01"  # test on this window (real WC 2018 + after)
 BACKTEST_TEST_END = "2022-12-31"
+
+# ---------------------------------------------------------------------------
+# Final evaluation (runs once all 104 results are entered)
+# ---------------------------------------------------------------------------
+# Replay the live forecast: re-fit the model before every match day on the
+# results known at that point, and re-run the full Monte Carlo after each round.
+# This is what makes "live model vs pre-tournament model" measurable; it adds
+# ~3 minutes to a run. Set False to skip it (the rest of the report still runs).
+RUN_LIVE_REPLAY = True
 
 # ---------------------------------------------------------------------------
 # Output formatting

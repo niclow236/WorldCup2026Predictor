@@ -1,0 +1,17 @@
+model,bin,forecasts,mean_forecast,observed_frequency
+pre-tournament,0–10%,23,0.0664,0.087
+pre-tournament,10–20%,44,0.1522,0.0909
+pre-tournament,20–30%,79,0.2587,0.1266
+pre-tournament,30–40%,85,0.3372,0.3647
+pre-tournament,40–50%,24,0.4438,0.5
+pre-tournament,50–60%,29,0.5463,0.8621
+pre-tournament,60–70%,16,0.6554,0.8125
+pre-tournament,70–100%,12,0.8079,0.5833
+live,0–10%,22,0.0614,0.0909
+live,10–20%,47,0.1563,0.0851
+live,20–30%,74,0.2586,0.1216
+live,30–40%,89,0.3381,0.3933
+live,40–50%,26,0.446,0.4615
+live,50–60%,28,0.5463,0.8214
+live,60–70%,9,0.6595,0.7778
+live,70–100%,17,0.7794,0.7059
