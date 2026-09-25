@@ -1,4 +1,4 @@
-# World Cup 2026 — Prediction Pipeline Output
+# World Cup 2026: Prediction Pipeline Output
 
 _Results through 2026-07-19 · 20,000 simulations/scenario_
 
@@ -7,7 +7,7 @@ _Results through 2026-07-19 · 20,000 simulations/scenario_
 
 ## ✅ Final verdict (tournament complete)
 
-- Champion: **Spain** — the pre-tournament model's favourite was **Spain** (18.1%)
+- Champion: **Spain**. The pre-tournament model's favourite was **Spain** (18.1%)
 - 90-minute results called: **65.4%** of 104; knockout winners: **27/32**
 - RPS over all 104 matches: **0.1598** (no-skill 0.2157); best model: GB squad-value hybrid
 - Full predicted-vs-actual report: [`final_evaluation/report.md`](final_evaluation/report.md)

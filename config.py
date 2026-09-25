@@ -1,5 +1,5 @@
 """
-config.py — central runtime configuration for the World Cup 2026 prediction pipeline.
+config.py: central runtime configuration for the World Cup 2026 prediction pipeline.
 
 Everything that a user might reasonably want to tune lives here:
   * filesystem layout (INPUT_DIR / OUTPUT_DIR and the individual file paths)
@@ -35,7 +35,7 @@ RESULTS_CSV = os.path.join(INPUT_DIR, "results.csv")
 SHOOTOUTS_CSV = os.path.join(INPUT_DIR, "shootouts.csv")
 FORMER_NAMES_CSV = os.path.join(INPUT_DIR, "former_names.csv")
 
-# The *actual* 2026 results — all 104 matches, verified against Wikipedia, ESPN
+# The *actual* 2026 results: all 104 matches, verified against Wikipedia, ESPN
 # and the martj42 dataset. Updated daily during the tournament; the pipeline
 # re-reads it on every run.
 ACTUAL_RESULTS_CSV = os.path.join(INPUT_DIR, "actual_results_2026.csv")

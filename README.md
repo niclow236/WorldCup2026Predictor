@@ -1,8 +1,8 @@
-# FIFA World Cup 2026 Predictor — Pipeline
+# FIFA World Cup 2026 Predictor
 
 A reproducible, command-line **forecasting pipeline** for the 2026 FIFA World Cup. It predicts a
 scoreline for every match (all 72 group games and all 32 knockout ties), a stage-by-stage probability
-for all 48 teams, and — crucially — **scores its own pre-tournament forecast against what really
+for all 48 teams, and, crucially, **scores its own pre-tournament forecast against what really
 happened.**
 
 The tournament is over, so this repository is now also the **record of how those forecasts did**:
@@ -56,7 +56,7 @@ evolved round by round, the biggest surprises, and who beat or fell short of the
 WorldCup2026Predictor/
 ├── config.py                 # runtime config: INPUT_DIR / OUTPUT_DIR + all tunables
 ├── constants.py              # tournament structure: groups, bracket wiring, FIFA 3rd-place table, K-factors
-├── run_pipeline.py           # entry point — runs the whole pipeline
+├── run_pipeline.py           # entry point: runs the whole pipeline
 ├── requirements.txt
 ├── README.md
 ├── code_desc.md              # in-depth, function-by-function description of the code
@@ -67,7 +67,7 @@ WorldCup2026Predictor/
 │   │   ├── former_names.csv
 │   │   ├── squad_values.csv        # squad market values frozen as of 10 Jun 2026
 │   │   └── actual_results_2026.csv # all 104 real results (the tournament's ground truth)
-│   └── output/               # config.OUTPUT_DIR — generated, committed as the final record
+│   └── output/               # config.OUTPUT_DIR: generated, committed as the final record
 │       └── final_evaluation/ # report.md + the tables and figures behind it
 ├── predictor/                # the engine
 │   ├── data_io.py            # load/clean data; parse the actual-results CSV
@@ -166,17 +166,17 @@ entered 2026 results ┴─► Elo ratings ─► Poisson goals model ─► GB 
                                           per-match scorelines · bracket · stage odds ◄──┘
 ```
 
-- **Elo** (`predictor/elo.py`) — World Football Elo with a goal-difference multiplier. World-Cup
+- **Elo** (`predictor/elo.py`): World Football Elo with a goal-difference multiplier. World-Cup
   matches carry the heaviest K-factor (60), so entered 2026 results move ratings the most.
-- **Poisson goals model** (`predictor/goals_model.py`) —
+- **Poisson goals model** (`predictor/goals_model.py`):
   `log λ = μ + attack_team + defence_opp + β_h·home + β_e·(Elo_team − Elo_opp)/100`, fit by a sparse
   `PoissonRegressor` with a two-year half-life on matches since 2008. It drives the per-match
   predictions and the projected bracket.
-- **Squad-value hybrid** (`predictor/squad_values.py`) — adds log squad-value difference, rolling form
+- **Squad-value hybrid** (`predictor/squad_values.py`): adds log squad-value difference, rolling form
   and rest days via a `HistGradientBoostingRegressor` (Poisson loss), and supplies the expected-goals
   matrices for the Monte Carlo. Squad values are Transfermarkt market values as of 10 June 2026, cached
   in `data/input/squad_values.csv`.
-- **Monte Carlo** (`predictor/tournament.py`) — simulates the whole tournament 20,000×, honouring
+- **Monte Carlo** (`predictor/tournament.py`): simulates the whole tournament 20,000×, honouring
   entered scores in the group stage and entered winners in the knockouts (regulation → extra time at a
   third of the scoring rate → Elo-tilted shoot-out). A Dixon-Coles low-score correction sharpens the
   displayed scorelines.
@@ -189,7 +189,7 @@ if `results.csv` is re-downloaded. `code_desc.md` documents every function in de
 
 ## Measuring accuracy (predicted vs actual)
 
-The right question is *"how good was the forecast the model made before it saw these games?"* —
+The right question is how good the forecast was *before* the model saw these games.
 `predictor/accuracy.py` answers it by scoring the **pre-tournament model** (trained on **zero** 2026
 data) against the actual results. There is no look-ahead.
 
@@ -202,7 +202,7 @@ and shoot-out included).
 |---|---|---|
 | `group_outcome_accuracy` / `all90_outcome_accuracy` | the most-probable 90-minute result happened (72 group games / all 104) | higher |
 | `group_exact_accuracy`   | the most-likely *scoreline* happened | higher |
-| `group_rps` / `all90_rps` | Ranked Probability Score — the football standard for ordered W/D/L | lower |
+| `group_rps` / `all90_rps` | Ranked Probability Score, the football standard for ordered W/D/L | lower |
 | `group_brier`, `group_logloss` | multiclass Brier score; mean −log P(true outcome) | lower |
 | `rps_skill_vs_baseline`  | RPS improvement over a no-skill base-rate forecast | higher (>0 = skilful) |
 | `ko_winner_accuracy`     | the side the model made likelier to advance did advance | higher |
@@ -218,16 +218,16 @@ train-before-2018 / test-2018–2022 back-test.
 Once all 104 results are in, `predictor/evaluation.py` and `predictor/report.py` produce
 `data/output/final_evaluation/`:
 
-- **Data integrity** — the real bracket is rebuilt from the group results and must match every
+- **Data integrity**: the real bracket is rebuilt from the group results and must match every
   knockout row.
-- **Model comparison** — base rate, "higher Elo wins", Poisson, Poisson + Elo and the GB hybrid (all
+- **Model comparison**: base rate, "higher Elo wins", Poisson, Poisson + Elo and the GB hybrid (all
   trained before kick-off) plus the **live model**, re-fitted before each of the 34 match days on the
   results known by then (a faithful replay of the daily to-date runs). Differences come with 95%
   paired-bootstrap intervals, because 104 matches is a small sample.
-- **Tournament forecasts** — every stage-reach probability scored (Brier vs a uniform forecast),
+- **Tournament forecasts**: every stage-reach probability scored (Brier vs a uniform forecast),
   group orders and the projected bracket against the real ones, and the title odds re-simulated after
   every round.
-- **Diagnostics** — calibration, the biggest surprises, and which teams beat or fell short of their
+- **Diagnostics**: calibration, the biggest surprises, and which teams beat or fell short of their
   expected finish.
 
 ---
@@ -268,7 +268,7 @@ Everything tunable lives in `config.py`:
 - Shoot-outs near-random (mild Elo tilt only).
 - Group ties in the simulator are broken by points → goal difference → goals → random; FIFA 2026 puts
   head-to-head results first (the final evaluation applies the full FIFA rules to the real tables).
-- The projected bracket is a single *modal* path — use the probability tables for the rigorous view.
+- The projected bracket is a single *modal* path; use the probability tables for the rigorous view.
 - Squad values are a static proxy applied across all historical training rows.
 - The Monte-Carlo title odds printed during the tournament used a live Transfermarkt snapshot that has
   since been rebuilt; the frozen as-of-10-June values reproduce them to within a few tenths of a point.
@@ -281,7 +281,7 @@ Everything tunable lives in `config.py`:
 |---|---|---|
 | International results (~49k, 1872–present) | [`martj42/international_results`](https://github.com/martj42/international_results) | CC0 |
 | Squad market values and valuation history | [`dcaribou/transfermarkt-datasets`](https://github.com/dcaribou/transfermarkt-datasets) | CC0 |
-| 2026 World Cup results (verification) | [Wikipedia](https://en.wikipedia.org/wiki/2026_FIFA_World_Cup) match reports, [ESPN](https://www.espn.com/soccer/scoreboard/_/league/fifa.world) scoreboards, `martj42/international_results` | — |
+| 2026 World Cup results (verification) | [Wikipedia](https://en.wikipedia.org/wiki/2026_FIFA_World_Cup) match reports, [ESPN](https://www.espn.com/soccer/scoreboard/_/league/fifa.world) scoreboards, `martj42/international_results` | n/a |
 
 Methods: Dixon & Coles (1997); Lasek et al. (2013); Groll & Zeileis (2018–2026). Seeded
 (`RNG_SEED = 42`) for full reproducibility.

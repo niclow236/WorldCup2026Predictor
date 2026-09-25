@@ -1,5 +1,5 @@
 """
-squad_values.py — optional Transfermarkt + gradient-boosting hybrid.
+squad_values.py: optional Transfermarkt + gradient-boosting hybrid.
 
 Sums the top-23 player market values per nation (as of the eve of the
 tournament) and fits a ``HistGradientBoostingRegressor`` (Poisson loss) on
@@ -8,15 +8,15 @@ home flag). The fitted model yields an expected-goals function
 ``xg_gb(a, b, home)`` that the tournament layer can use *instead of* the linear
 Poisson model.
 
-Squad values are computed once from Transfermarkt's dated valuation history —
-each player's latest value on or before ``config.SQUAD_VALUE_AS_OF`` — and
+Squad values are computed once from Transfermarkt's dated valuation history
+(each player's latest value on or before ``config.SQUAD_VALUE_AS_OF``) and
 cached to ``config.SQUAD_VALUES_CSV``. Freezing them keeps the pre-tournament
 forecast honest (no in-tournament price moves) and makes reruns reproducible
 (the live snapshot is rebuilt weekly).
 
 Everything here is best-effort: if the download or fit fails (e.g. offline with
 no cache, or ``config.USE_SQUAD_VALUE_GB`` is False) the caller falls back to
-Poisson+Elo. Squad values are a *static* cross-sectional quality proxy — an
+Poisson+Elo. Squad values are a *static* cross-sectional quality proxy: an
 approximation for historical rows, reasonable because squad tier changes slowly
 and Elo already captures historical form.
 """
@@ -146,7 +146,7 @@ def build_squad_value_model(matches_all: pd.DataFrame, ratings: dict):
     ``info`` always carries an ``ok`` flag and a human-readable ``message``.
     """
     if not config.USE_SQUAD_VALUE_GB:
-        return None, {"ok": False, "message": "USE_SQUAD_VALUE_GB is False — staying on Poisson+Elo."}
+        return None, {"ok": False, "message": "USE_SQUAD_VALUE_GB is False; staying on Poisson+Elo."}
 
     try:
         from sklearn.ensemble import HistGradientBoostingRegressor
@@ -210,5 +210,5 @@ def build_squad_value_model(matches_all: pd.DataFrame, ratings: dict):
         }
         return xg_gb, info
 
-    except Exception as e:  # noqa: BLE001 — best-effort; any failure => fallback
+    except Exception as e:  # noqa: BLE001 (best-effort; any failure => fallback)
         return None, {"ok": False, "message": f"Squad-value hybrid skipped: {str(e)[:140]}"}

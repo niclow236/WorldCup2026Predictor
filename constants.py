@@ -1,5 +1,5 @@
 """
-constants.py — structural facts about the 2026 FIFA World Cup that never change.
+constants.py: structural facts about the 2026 FIFA World Cup that never change.
 
 This is the single source of truth for:
   * the 48 teams and their 12 groups (A-L)                       -> GROUPS
@@ -58,7 +58,7 @@ def k_factor(tournament: str) -> int:
     """Return the Elo K-factor for a match of the given competition tier.
 
     World Cup matches carry the heaviest weight (60), so entered 2026 results
-    move ratings the most — which is exactly how later-round predictions sharpen.
+    move ratings the most, which is exactly how later-round predictions sharpen.
     """
     t = str(tournament)
     if t == "FIFA World Cup":
@@ -123,7 +123,7 @@ TM_MAP: dict[str, str] = {
 # ---------------------------------------------------------------------------
 # Top two of each group plus the eight best third-placed teams reach the R32.
 # *Which* R32 slot each qualifying third takes depends on which eight groups
-# they come from — FIFA publishes a row for every C(12,8)=495 combination.
+# they come from; FIFA publishes a row for every C(12,8)=495 combination.
 # Each line: <8 qualifying group letters> <8 assignments in WINNER_SLOT_ORDER>.
 WINNER_SLOT_ORDER: list[str] = ["A", "B", "D", "E", "G", "I", "K", "L"]
 

@@ -1,5 +1,5 @@
 """
-goals_model.py — time-weighted Poisson goals model (+ optional Elo feature).
+goals_model.py: time-weighted Poisson goals model (+ optional Elo feature).
 
 Model
 -----
@@ -7,7 +7,7 @@ Model
                 + β_e · (Elo_team − Elo_opp) / 100
 
 Fit by a sparse ``PoissonRegressor`` with sample weights that decay with a
-two-year half-life, on matches since ``config.TRAIN_SINCE`` — including any
+two-year half-life, on matches since ``config.TRAIN_SINCE``, including any
 entered 2026 results, so attack/defence strengths adapt to World-Cup form.
 
 The fitted model is a plain dict (``att``, ``dfn``, ``hc``, ``elo_beta``,

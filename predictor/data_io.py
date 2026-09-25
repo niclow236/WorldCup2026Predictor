@@ -1,14 +1,14 @@
 """
-data_io.py — data acquisition, cleaning, and actual-result ingestion.
+data_io.py: data acquisition, cleaning, and actual-result ingestion.
 
 Responsibilities
 ----------------
 1. Make sure the three historical CSVs exist locally (download on first run).
-2. Clean the raw results into ``matches_hist`` — the historical training base
+2. Clean the raw results into ``matches_hist``, the historical training base
    (strictly pre-tournament, so 2026 scores can never leak in).
 3. Parse ``actual_results_2026.csv`` (the real 2026 results) into the two dicts
    the simulator conditions on (``group_actual`` / ``ko_actual``).
-4. Append entered 2026 results to the history to produce ``matches_all`` — the
+4. Append entered 2026 results to the history to produce ``matches_all``, the
    table the Elo and goals model train on (so World-Cup form feeds back in).
 
 The actual-result dicts use ``frozenset({team_a, team_b})`` keys so a fixture
@@ -67,7 +67,7 @@ def clean_results(results_raw: pd.DataFrame) -> pd.DataFrame:
     """Clean raw results into the historical training base ``matches_hist``.
 
     Keeps only matches played *before* the tournament starts and drops unplayed
-    fixtures (the dataset lists 2026 games with blank scores — they must not
+    fixtures (the dataset lists 2026 games with blank scores; they must not
     train the model), casts scores to int, normalises the neutral-venue flag,
     and sorts chronologically.
 
@@ -92,7 +92,7 @@ def clean_results(results_raw: pd.DataFrame) -> pd.DataFrame:
 def _check_team(team: str) -> None:
     if team not in ALL_TEAMS:
         raise ValueError(
-            f"'{team}' is not a 2026 team — check spelling against constants.GROUPS."
+            f"'{team}' is not a 2026 team; check spelling against constants.GROUPS."
         )
 
 
@@ -102,7 +102,7 @@ def load_actuals(csv_path: str | None = None) -> tuple[dict, dict]:
     CSV columns: ``date, stage, team_a, score_a, score_b, team_b, aet,
     pen_winner, pen_a, pen_b``. ``stage`` is ``group`` or ``ko``. Scores are
     final scores *including extra time* (never shootout kicks). For knockout
-    rows, ``aet`` is 1 if the tie went to extra time (optional — a level score
+    rows, ``aet`` is 1 if the tie went to extra time (optional; a level score
     implies it); a level score also requires ``pen_winner``, with the shootout
     score in ``pen_a``/``pen_b`` optional. Each record keeps its ``date``.
     Returns empty dicts if the file is absent (that is the legitimate
@@ -139,7 +139,7 @@ def load_actuals(csv_path: str | None = None) -> tuple[dict, dict]:
         pen_winner = None if pd.isna(r.pen_winner) else str(r.pen_winner).strip()
         if ga == gb and not pen_winner:
             raise ValueError(
-                f"{a} {ga}-{gb} {b} is level — a 'pen_winner' is required for knockout rows."
+                f"{a} {ga}-{gb} {b} is level: a 'pen_winner' is required for knockout rows."
             )
         if pen_winner and (ga != gb or pen_winner not in (a, b)):
             raise ValueError(
