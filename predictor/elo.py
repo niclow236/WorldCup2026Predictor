@@ -1,9 +1,9 @@
 """
-elo.py — World Football Elo ratings.
+elo.py: World Football Elo ratings.
 
 Standard World-Football-Elo update with a goal-difference multiplier. Because
 the K-factor schedule (constants.k_factor) gives World-Cup matches the heaviest
-weight, any 2026 results appended to the training table move ratings the most —
+weight, any 2026 results appended to the training table move ratings the most,
 which is exactly how later-round predictions sharpen as the tournament unfolds.
 
 Shootouts count as draws for rating purposes (we never see a "penalty win" as a

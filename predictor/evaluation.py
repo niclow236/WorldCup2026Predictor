@@ -1,11 +1,11 @@
 """
-evaluation.py — the post-tournament verdict: what the models predicted vs what happened.
+evaluation.py: the post-tournament verdict (what the models predicted vs what happened).
 
 Runs once every result is in (all 104 matches) and answers, with no look-ahead:
 
 1. **Is the data consistent?** ``reconstruct_bracket`` rebuilds the real
-   tournament from the group results alone — FIFA 2026 tie-breakers, the
-   best-third ranking, FIFA's 495-row slot table and the bracket wiring — and
+   tournament from the group results alone (FIFA 2026 tie-breakers, the
+   best-third ranking, FIFA's 495-row slot table and the bracket wiring) and
    raises unless every entered knockout result fits exactly where it should.
 2. **How good were the match predictions?** ``model_comparison`` scores every
    model on all 104 matches: a base-rate and an Elo-favourite baseline, the
@@ -91,7 +91,7 @@ def _rank_level(tied, results, overall) -> list[str]:
 
     Head-to-head points, goal difference and goals among the tied teams, reapplied
     to any subset still level; then overall goal difference and goals. Fair play
-    and the FIFA ranking are not modelled — a tie that reaches them raises.
+    and the FIFA ranking are not modelled; a tie that reaches them raises.
     """
     if len(tied) == 1:
         return list(tied)
@@ -132,7 +132,7 @@ def rank_thirds(tables: dict[str, pd.DataFrame]) -> pd.DataFrame:
     key = lambda x: (x[1]["Pts"], x[1]["GD"], x[1]["GF"])  # noqa: E731
     thirds.sort(key=key, reverse=True)
     if key(thirds[7]) == key(thirds[8]):
-        raise ValueError("8th and 9th best third-placed teams are level — fair-play data needed.")
+        raise ValueError("8th and 9th best third-placed teams are level; fair-play data needed.")
     return pd.DataFrame([{"rank": i, "group": g, "team": r["team"], "Pts": r["Pts"], "GD": r["GD"],
                           "GF": r["GF"], "qualified": i <= 8} for i, (g, r) in enumerate(thirds, 1)])
 
@@ -322,8 +322,9 @@ def surprises(pre: pd.DataFrame, n: int = 6) -> pd.DataFrame:
     """The results the pre-tournament model found least likely (``n`` per stage).
 
     Group games: P(the actual 90-minute outcome). Knockout ties: P(the team
-    that actually went through advancing) — who progressed is what mattered —
-    listing only the ties the model called wrong (probability below 50%).
+    that actually went through advancing), since who progressed is what
+    mattered; only the ties the model called wrong (probability below 50%)
+    are listed.
     """
     p_col = {"H": "p_a", "D": "p_draw", "A": "p_b"}
     rows = []

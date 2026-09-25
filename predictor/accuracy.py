@@ -1,22 +1,22 @@
 """
-accuracy.py — score a model's match predictions against ACTUAL 2026 results.
+accuracy.py: score a model's match predictions against ACTUAL 2026 results.
 
 The headline use is the honest, out-of-sample question "how accurate is my
 model?": take the model trained *without any 2026 data* (a genuine
 pre-tournament forecast) and compare its predictions to the real results. No
-look-ahead — the forecast never saw these games. ``evaluation.py`` reuses the
+look-ahead: the forecast never saw these games. ``evaluation.py`` reuses the
 same scorer for the other model variants and for the replay of the live model.
 
 Every match on one 90-minute W/D/L scale
 ----------------------------------------
 Knockout ties that went to extra time or penalties count as 90-minute draws, so
 all matches (group and knockout) are scored the same way:
-  * outcome accuracy  — did the most-probable outcome happen?
-  * exact-score       — did the most-likely scoreline happen? (skipped for
-                        extra-time games, whose 90-minute score isn't recorded)
-  * RPS               — Ranked Probability Score (ordered W/D/L)
-  * Brier score       — multiclass (sum of squared prob errors over W/D/L)
-  * log-loss          — mean -log P(true outcome)
+  * outcome accuracy: did the most-probable outcome happen?
+  * exact-score: did the most-likely scoreline happen? (skipped for
+    extra-time games, whose 90-minute score isn't recorded)
+  * RPS: Ranked Probability Score (ordered W/D/L)
+  * Brier score: multiclass (sum of squared prob errors over W/D/L)
+  * log-loss: mean -log P(true outcome)
 
 Knockout advancement (who went through, incl. extra time and shootouts)
 ------------------------------------------------------------------------
@@ -45,7 +45,7 @@ from constants import HOSTS
 from predictor.goals_model import scoreline_grid, xg
 from predictor.tournament import advance_prob, shootout_prob
 
-# Long-run base rates of international-match outcomes — a no-skill reference.
+# Long-run base rates of international-match outcomes: a no-skill reference.
 BASELINE_WDL = (0.45, 0.27, 0.28)
 OUTCOMES = ("H", "D", "A")
 ET_GOAL_FACTOR = 4.0 / 3.0     # 120 minutes at the 90-minute per-minute rate
@@ -142,7 +142,7 @@ def summarise(df: pd.DataFrame) -> dict:
     summary: dict = {"n_group": int((df["stage"] == "group").sum()) if len(df) else 0,
                      "n_ko": int((df["stage"] == "ko").sum()) if len(df) else 0}
     if not len(df):
-        summary["message"] = "No actual results entered yet — nothing to score."
+        summary["message"] = "No actual results entered yet, so there is nothing to score."
         return summary
 
     def base(frame):

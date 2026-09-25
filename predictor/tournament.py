@@ -1,5 +1,5 @@
 """
-tournament.py — lambda matrices, group/knockout simulation, Monte Carlo.
+tournament.py: lambda matrices, group/knockout simulation, Monte Carlo.
 
 The simulator is fully *conditioned* on entered results: where you have entered
 a real group score it is used verbatim, and where you have entered a real
@@ -10,7 +10,7 @@ Design
 ------
 ``build_lambda_matrices`` pre-computes expected goals for every ordered team
 pair once (neutral and home variants), so a single tournament simulation is just
-Poisson draws and comparisons — ~0.3 ms each. ``TournamentSimulator`` bundles
+Poisson draws and comparisons (~0.3 ms each). ``TournamentSimulator`` bundles
 those matrices with the realised-results dicts and exposes ``sim_tournament``
 (one realisation) and ``monte_carlo`` (many).
 """
@@ -32,7 +32,7 @@ def build_lambda_matrices(xg_fn) -> tuple[np.ndarray, np.ndarray, dict, list]:
 
     ``xg_fn(attacker, defender, home)`` -> expected goals. If ``xg_fn`` also
     exposes a vectorised ``xg_fn.many(attackers, defenders, home)`` (the GB
-    hybrid does), all pairs are evaluated in one batch call — same numbers,
+    hybrid does), all pairs are evaluated in one batch call: same numbers,
     ~100x faster than 4,512 single-row predictions. Returns
     ``(LAM_NEU, LAM_HOME, idx, all_teams)`` where ``idx`` maps team -> row index.
     """
@@ -59,7 +59,7 @@ def build_lambda_matrices(xg_fn) -> tuple[np.ndarray, np.ndarray, dict, list]:
 
 
 def shootout_prob(elo_a: float, elo_b: float) -> float:
-    """Probability ``a`` wins a penalty shootout — a mild Elo tilt, near coin-flip."""
+    """Probability ``a`` wins a penalty shootout: a mild Elo tilt, near coin-flip."""
     return 1.0 / (1.0 + 10.0 ** (-(elo_a - elo_b) / 2000.0))
 
 
@@ -106,12 +106,12 @@ class TournamentSimulator:
 
     # -- shootouts ----------------------------------------------------------
     def pen_p(self, a: str, b: str) -> float:
-        """Probability ``a`` wins a shootout — mild Elo tilt, near coin-flip."""
+        """Probability ``a`` wins a shootout: mild Elo tilt, near coin-flip."""
         return shootout_prob(self.elo_arr[self.idx[a]], self.elo_arr[self.idx[b]])
 
     @staticmethod
     def _compute_pen_mode(n: int = 4000, p: float = 0.76, seed: int = 7):
-        """Modal (winner, loser) shootout score — used to display projected pens."""
+        """Modal (winner, loser) shootout score, used to display projected pens."""
         rng = np.random.default_rng(seed)
         scores = []
         for _ in range(n):

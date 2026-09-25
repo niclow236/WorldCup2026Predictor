@@ -1,5 +1,5 @@
 """
-predictor — the World Cup 2026 forecasting engine.
+predictor: the World Cup 2026 forecasting engine.
 
 Module map (data flows top to bottom):
 

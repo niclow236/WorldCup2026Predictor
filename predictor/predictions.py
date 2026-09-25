@@ -1,11 +1,11 @@
 """
-predictions.py — human-readable per-match and bracket forecasts.
+predictions.py: human-readable per-match and bracket forecasts.
 
 Two products:
-  * ``group_stage_predictions`` — a predicted scoreline for all 72 group games
+  * ``group_stage_predictions``: a predicted scoreline for all 72 group games
     (entered results shown verbatim and flagged "actual"; the rest use the most-likely
     Dixon-Coles-corrected scoreline).
-  * ``project_bracket`` — the single *most-likely path* through the knockout
+  * ``project_bracket``: the single *most-likely path* through the knockout
     bracket (all 32 ties, including the third-place play-off), built from the
     Monte-Carlo modal group finishers and third-place qualifiers. The
     probability tables from the Monte Carlo are the rigorous view; this is the

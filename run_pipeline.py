@@ -1,11 +1,11 @@
 """
-run_pipeline.py — end-to-end World Cup 2026 prediction pipeline.
+run_pipeline.py: end-to-end World Cup 2026 prediction pipeline.
 
 Run:  python run_pipeline.py
 
 It produces, in data/output/:
 
-  Pre-tournament (NO 2026 data — a clean prior forecast)
+  Pre-tournament (NO 2026 data: a clean prior forecast)
     pretournament_group_predictions.csv
     pretournament_knockout_bracket.csv
     pretournament_probabilities.csv
@@ -16,16 +16,16 @@ It produces, in data/output/:
     todate_probabilities.csv
 
   Cross-cutting
-    champion_probabilities.png  — title odds, pre-tournament vs to-date
-    overall_winner.csv          — champion + podium contenders (to-date model)
-    accuracy_report.csv         — pre-tournament forecast vs each actual result
-    accuracy_summary.csv        — aggregate accuracy metrics
-    backtest.csv                — out-of-sample engine validation
-    summary.md                  — human-readable digest of everything above
+    champion_probabilities.png  title odds, pre-tournament vs to-date
+    overall_winner.csv          champion + podium contenders (to-date model)
+    accuracy_report.csv         pre-tournament forecast vs each actual result
+    accuracy_summary.csv        aggregate accuracy metrics
+    backtest.csv                out-of-sample engine validation
+    summary.md                  human-readable digest of everything above
 
   Final evaluation (once all 104 results are entered), in final_evaluation/
-    report.md                   — predicted vs actual: the tournament verdict
-    *.csv, *.png                — the tables and figures behind the report
+    report.md                   predicted vs actual, the tournament verdict
+    *.csv, *.png                the tables and figures behind the report
 
 The two scenarios share one code path (``build_scenario``); the only difference
 is whether the actual-results dicts are populated. That is what makes "with vs
@@ -133,7 +133,7 @@ def _final_evaluation(matches_hist, pre, pre_bracket, acc_df, acc_summary, group
     os.makedirs(out, exist_ok=True)
     print("\n=== Final evaluation: predicted vs actual ===")
     bracket, tables, thirds = evaluation.reconstruct_bracket(group_actual, ko_actual)
-    print("  bracket rebuilt from the group results — all 32 knockout ties consistent")
+    print("  bracket rebuilt from the group results: all 32 knockout ties consistent")
     finish = evaluation.finish_index(bracket)
 
     # Match-level scoring of every model on the same 104 matches.
@@ -269,7 +269,7 @@ def _write_summary(pre, todate, pre_champ, td_champ, td_finalists,
     dates = [rec["date"] for rec in list(group_actual.values()) + list(ko_actual.values())]
     through = f"results through {max(dates)}" if dates else "no results entered"
     lines = []
-    lines.append("# World Cup 2026 — Prediction Pipeline Output\n")
+    lines.append("# World Cup 2026: Prediction Pipeline Output\n")
     lines.append(f"_{through.capitalize()} · {config.N_SIMS:,} simulations/scenario_\n")
     lines.append(f"- Entered results to date: **{len(group_actual)} group**, **{len(ko_actual)} knockout**")
     lines.append(f"- GB squad-value hybrid (to-date): {todate['gb_info']['message']}\n")
@@ -277,7 +277,7 @@ def _write_summary(pre, todate, pre_champ, td_champ, td_finalists,
     if final is not None:
         comp = final["comparison"].set_index("model")
         lines.append("## ✅ Final verdict (tournament complete)\n")
-        lines.append(f"- Champion: **{td_champ}** — the pre-tournament model's favourite was "
+        lines.append(f"- Champion: **{td_champ}**. The pre-tournament model's favourite was "
                      f"**{pre['forecast'].iloc[0]['team']}** ({pre['forecast'].iloc[0]['champion_%']:.1f}%)")
         lines.append(f"- 90-minute results called: **{100 * acc_summary['all90_outcome_accuracy']:.1f}%** of 104; "
                      f"knockout winners: **{round(acc_summary['ko_winner_accuracy'] * acc_summary['n_ko'])}/"
@@ -304,7 +304,7 @@ def _write_summary(pre, todate, pre_champ, td_champ, td_finalists,
         for k, v in acc_summary.items():
             lines.append(f"- **{k}**: {v}")
     else:
-        lines.append("- No actual results entered yet — nothing to score.")
+        lines.append("- No actual results entered yet, so there is nothing to score.")
     lines.append("")
 
     lines.append("## 🔬 Engine back-test (out-of-sample, 2018–2022)\n")

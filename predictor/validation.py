@@ -1,16 +1,16 @@
 """
-validation.py — out-of-sample temporal back-test of the goals model.
+validation.py: out-of-sample temporal back-test of the goals model.
 
 Strict time split (train < BACKTEST_TRAIN_END, test on the BACKTEST window) so
 nothing about the future leaks into training. We report three standard 1X2
 metrics on held-out matches and compare Poisson-only vs Poisson+Elo:
 
-  * accuracy  — fraction where the most-probable outcome was correct
-  * log-loss  — mean negative log-probability of the true outcome
-  * RPS       — Ranked Probability Score, the football standard for ordered
-                W/D/L forecasts (lower is better; ~0.19-0.21 is competitive)
+  * accuracy: fraction where the most-probable outcome was correct
+  * log-loss: mean negative log-probability of the true outcome
+  * RPS: Ranked Probability Score, the football standard for ordered
+    W/D/L forecasts (lower is better; ~0.19-0.21 is competitive)
 
-This back-test uses only pre-2026 data, so it is unaffected by entered results —
+This back-test uses only pre-2026 data, so it is unaffected by entered results:
 it characterises the *engine*, not the live forecast (that is accuracy.py).
 """
 
